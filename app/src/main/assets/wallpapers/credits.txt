@@ -26,13 +26,6 @@ https://commons.wikimedia.org/wiki/File:Green_turtle_in_Kona_2008.jpg
 https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Green_turtle_in_Kona_2008.jpg/1920px-Green_turtle_in_Kona_2008.jpg
 Centre cropped for phone display.
 
-Atlantic puffin
-nbasargin
-CC BY 4.0
-https://www.inaturalist.org/observations/188402991
-https://inaturalist-open-data.s3.amazonaws.com/photos/329738638/original.jpeg
-Centre cropped for phone display.
-
 Red squirrel
 carnifex
 CC BY 4.0
@@ -73,13 +66,6 @@ no rights reserved
 CC0 1.0
 https://www.inaturalist.org/observations/314137117
 https://inaturalist-open-data.s3.amazonaws.com/photos/567360018/original.jpg
-Centre cropped for phone display.
-
-Common kingfisher
-Frank Sengpiel
-CC BY 4.0
-https://www.inaturalist.org/observations/69725166
-https://inaturalist-open-data.s3.amazonaws.com/photos/113200877/original.jpg
 Centre cropped for phone display.
 
 European robin
@@ -129,13 +115,6 @@ Gregory "Slobirdr" Smith
 CC BY-SA 2.0
 https://commons.wikimedia.org/wiki/File:Alaska_Red_Fox_(Vulpes_vulpes).jpg
 https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/Alaska_Red_Fox_%28Vulpes_vulpes%29.jpg/1920px-Alaska_Red_Fox_%28Vulpes_vulpes%29.jpg
-Centre cropped for phone display.
-
-Red fox in snow
-ClaudiaTen
-CC BY-SA 4.0
-https://commons.wikimedia.org/wiki/File:Portrait_of_a_red_fox_in_Rautas_fj%C3%A4llurskog.jpg
-https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cc/Portrait_of_a_red_fox_in_Rautas_fj%C3%A4llurskog.jpg/1920px-Portrait_of_a_red_fox_in_Rautas_fj%C3%A4llurskog.jpg
 Centre cropped for phone display.
 
 Red fox
@@ -227,13 +206,6 @@ Leonardo Rapisarda
 CC BY 4.0
 https://www.inaturalist.org/observations/283875333
 https://inaturalist-open-data.s3.amazonaws.com/photos/510126816/original.jpg
-Centre cropped for phone display.
-
-African penguin
-no rights reserved
-CC0 1.0
-https://www.inaturalist.org/observations/99313269
-https://inaturalist-open-data.s3.amazonaws.com/photos/165530375/original.jpg
 Centre cropped for phone display.
 
 Magellanic penguin
@@ -339,13 +311,6 @@ nevwright
 CC BY 4.0
 https://www.inaturalist.org/observations/27774693
 https://inaturalist-open-data.s3.amazonaws.com/photos/43249476/original.jpg
-Centre cropped for phone display.
-
-Pribilof Island Arctic fox
-William Stephens
-CC BY 4.0
-https://www.inaturalist.org/observations/42462708
-https://inaturalist-open-data.s3.amazonaws.com/photos/67422207/original.jpg
 Centre cropped for phone display.
 
 Arctic fox
