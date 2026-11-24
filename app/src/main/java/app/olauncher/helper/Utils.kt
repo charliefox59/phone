@@ -44,9 +44,6 @@ import app.olauncher.data.shortcutIdentity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.URL
 import java.text.Collator
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -347,24 +344,6 @@ fun openAppInfo(context: Context, userHandle: UserHandle, packageName: String) {
         context.showToast(context.getString(R.string.unable_to_open_app_info))
 }
 
-suspend fun getBitmapFromURL(src: String?): Bitmap? {
-    return withContext(Dispatchers.IO) {
-        var bitmap: Bitmap? = null
-        try {
-            val url = URL(src)
-            val connection: HttpURLConnection = url
-                .openConnection() as HttpURLConnection
-            connection.doInput = true
-            connection.connect()
-            val input: InputStream = connection.inputStream
-            bitmap = BitmapFactory.decodeStream(input)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        bitmap
-    }
-}
-
 suspend fun getWallpaperBitmap(originalImage: Bitmap, width: Int, height: Int): Bitmap {
     return withContext(Dispatchers.IO) {
 
@@ -399,9 +378,10 @@ suspend fun getWallpaperBitmap(originalImage: Bitmap, width: Int, height: Int): 
     }
 }
 
-suspend fun setWallpaper(appContext: Context, url: String): Boolean {
+suspend fun setWallpaper(appContext: Context, index: Int): Boolean {
     return withContext(Dispatchers.IO) {
-        val originalImageBitmap = getBitmapFromURL(url) ?: return@withContext false
+        val originalImageBitmap = appContext.assets.open("wallpapers/$index.jpg").use { BitmapFactory.decodeStream(it) }
+            ?: return@withContext false
         if (appContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && isTablet(appContext).not())
             return@withContext false
 
@@ -433,10 +413,13 @@ fun getScreenDimensions(context: Context): Pair<Int, Int> {
     return Pair(point.x, point.y)
 }
 
-// Picks today's image from our bundled list (res/raw/wallpapers.txt), one URL per line.
-fun getTodaysWallpaper(context: Context): String {
-    val urls = context.resources.openRawResource(R.raw.wallpapers).bufferedReader().readLines().filter { it.isNotBlank() }
-    return urls[java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_YEAR) % urls.size]
+fun getTodaysWallpaper(context: Context): Pair<Int, String> {
+    val urls = context.resources.openRawResource(R.raw.wallpapers).bufferedReader().use { it.readLines() }
+    val now = System.currentTimeMillis()
+    val localDay = (now + java.util.TimeZone.getDefault().getOffset(now)) / 86_400_000L
+    val order = urls.indices.shuffled(kotlin.random.Random(localDay / urls.size))
+    val index = order[(localDay % urls.size).toInt()]
+    return index to urls[index]
 }
 
 @SuppressLint("WrongConstant", "PrivateApi")

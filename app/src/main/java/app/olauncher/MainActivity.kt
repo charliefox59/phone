@@ -100,6 +100,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.resetLauncherLiveData.call()
         }
 
+        if (prefs.dailyWallpaper) viewModel.setWallpaperWorker()
         initObservers(viewModel)
         viewModel.getAppList()
         registerShortcutCallback()

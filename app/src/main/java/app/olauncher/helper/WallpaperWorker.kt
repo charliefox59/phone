@@ -16,13 +16,13 @@ class WallpaperWorker(appContext: Context, workerParams: WorkerParameters) : Cor
             if (prefs.appTheme == AppCompatDelegate.MODE_NIGHT_YES && isOlauncherDefault(applicationContext).not())
                 true
             else if (prefs.dailyWallpaper) {
-                val wallpaperUrl = getTodaysWallpaper(applicationContext)
+                val (index, wallpaperUrl) = getTodaysWallpaper(applicationContext)
                 if (prefs.dailyWallpaperUrl == wallpaperUrl)
                     true
-                else {
+                else if (setWallpaper(applicationContext, index)) {
                     prefs.dailyWallpaperUrl = wallpaperUrl
-                    setWallpaper(applicationContext, wallpaperUrl)
-                }
+                    true
+                } else false
             } else
                 true
 
