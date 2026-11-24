@@ -5,7 +5,7 @@
     <color name="colorAccent">#FFEB3B</color>
 
     <!--White-->
-    <color name="white">#FFFFFF</color>
+    <color name="white">#FAFAFA</color>
     <color name="whiteTrans90">#E6FFFFFF</color>
     <color name="whiteTrans80">#CCFFFFFF</color>
     <color name="whiteTrans50">#80FFFFFF</color>
@@ -28,4 +28,9 @@
     <color name="blackInverseTrans80">#CCFFFFFF</color>
     <color name="blackInverseTrans90">#E6FFFFFF</color>
 
+    <!--Zinc (shadcn) -->
+    <color name="zinc400">#A1A1AA</color>
+    <color name="zinc800">#27272A</color>
+    <color name="zinc950">#09090B</color>
+    <color name="zinc950Trans92">#EB09090B</color>
 </resources>

@@ -4,4 +4,8 @@
     <dimen name="alphabet_recycler_margin_end">10dp</dimen>
     <dimen name="alphabet_recycler_margin_start">320dp</dimen>
     <dimen name="dialog_blur_behind_radius">4dp</dimen>
+    <dimen name="home_status_end">24dp</dimen>
+    <dimen name="home_apps_start">24dp</dimen>
+    <dimen name="home_apps_top">112dp</dimen>
+    <dimen name="home_apps_bottom">48dp</dimen>
 </resources>

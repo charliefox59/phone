@@ -1,0 +1,7 @@
+<resources>
+    <dimen name="home_status_end">264dp</dimen>
+    <dimen name="home_apps_start">264dp</dimen>
+    <dimen name="home_apps_top">4dp</dimen>
+    <dimen name="home_apps_bottom">4dp</dimen>
+    <dimen name="home_app_padding_vertical">3dp</dimen>
+</resources>

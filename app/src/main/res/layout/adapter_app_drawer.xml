@@ -14,7 +14,8 @@
         android:maxLines="1"
         android:paddingHorizontal="24dp"
         android:paddingVertical="@dimen/app_padding_vertical"
-        android:text="@string/app" />
+        android:text="@string/app"
+        android:textColor="@drawable/text_colors_drawer" />
 
     <ImageView
         android:id="@+id/otherProfileIndicator"

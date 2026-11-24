@@ -43,7 +43,7 @@
         <item name="primaryShadeDarkColor">@color/blackInverseTrans25</item>
         <item name="dialogShadeColor">@color/blackInverseTrans50</item>
 
-        <item name="mainFontFamily">sans-serif-light</item>
+        <item name="mainFontFamily">@font/geist_light</item>
 
         <!-- Popup menus and dialogs used by settings -->
         <item name="popupMenuStyle">@style/OlPopupMenu</item>
@@ -55,7 +55,7 @@
 
     <!-- Applied over AppTheme when bold font is enabled -->
     <style name="BoldFontOverlay">
-        <item name="mainFontFamily">sans-serif</item>
+        <item name="mainFontFamily">@font/geist_regular</item>
     </style>
 
     <style name="WindowAnimationTransition">
@@ -68,19 +68,15 @@
         <item name="android:textSize">@dimen/text_large</item>
         <item name="android:textColor">?attr/primaryColor</item>
         <item name="android:editTextColor">?attr/primaryColor</item>
-        <item name="android:textColorHint">?attr/primaryColor</item>
+        <item name="android:textColorHint">@color/zinc400</item>
         <item name="android:fontFamily">?attr/mainFontFamily</item>
-        <item name="android:inputType">textCapSentences|textNoSuggestions</item>
+        <item name="android:inputType">textNoSuggestions</item>
         <item name="android:cursorVisible">false</item>
     </style>
 
     <style name="TextDefault" parent="@android:style/TextAppearance.Large">
         <item name="android:textColor">@drawable/text_colors_default</item>
         <item name="android:textColorHint">?attr/primaryColorTrans80</item>
-        <item name="android:shadowColor">?attr/primaryTextShadowColor</item>
-        <item name="android:shadowDx">0</item>
-        <item name="android:shadowDy">2</item>
-        <item name="android:shadowRadius">4</item>
     </style>
 
     <style name="TextLarge" parent="TextDefault">
@@ -93,11 +89,37 @@
     </style>
 
     <style name="TextSmall" parent="TextDefault">
+        <item name="android:fontFamily">@font/geist_regular</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
+    <style name="TextStatus" parent="TextDefault">
+        <item name="android:fontFamily">@font/geist_mono</item>
+        <item name="android:textColor">@color/zinc400</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Setting values: muted, like shadcn secondary text -->
     <style name="TextSmallBold" parent="TextSmall">
-        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/zinc400</item>
+    </style>
+
+    <!-- Compact settings rows -->
+    <style name="TextRow" parent="TextSmall">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="TextRowValue" parent="TextSmallBold">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <!-- Settings card titles: small muted mono label -->
+    <style name="TextSection" parent="TextDefault">
+        <item name="android:fontFamily">@font/geist_mono</item>
+        <item name="android:textColor">@color/zinc400</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.08</item>
     </style>
 
     <style name="TextSmallLight" parent="TextSmall">
@@ -106,7 +128,7 @@
 
     <!-- Popup menu anchored to a settings row -->
     <style name="OlPopupMenu" parent="Widget.AppCompat.PopupMenu">
-        <item name="android:popupBackground">@drawable/rounded_primary_gradient</item>
+        <item name="android:popupBackground">@drawable/bg_card</item>
         <item name="android:popupElevation">8dp</item>
     </style>
 

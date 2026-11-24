@@ -389,6 +389,10 @@ suspend fun getWallpaperBitmap(originalImage: Bitmap, width: Int, height: Int): 
 
         val paint = Paint()
         paint.isFilterBitmap = true
+        // Mostly desaturate and darken so any image reads as a calm, dark backdrop.
+        val tone = android.graphics.ColorMatrix().apply { setSaturation(0.2f) }
+        tone.postConcat(android.graphics.ColorMatrix().apply { setScale(0.6f, 0.6f, 0.6f, 1f) })
+        paint.colorFilter = android.graphics.ColorMatrixColorFilter(tone)
         canvas.drawBitmap(originalImage, transformation, paint)
 
         background
@@ -429,47 +433,10 @@ fun getScreenDimensions(context: Context): Pair<Int, Int> {
     return Pair(point.x, point.y)
 }
 
-suspend fun getTodaysWallpaper(wallType: String, firstOpenTime: Long): String {
-    return withContext(Dispatchers.IO) {
-        var wallpaperUrl: String
-        try {
-            val key = if (firstOpenTime.isDaySince() < 10)
-                String.format("0_%s", firstOpenTime.isDaySince().toString())
-            else {
-                val month = SimpleDateFormat("M", Locale.ENGLISH).format(Date()) ?: "0"
-                val day = SimpleDateFormat("d", Locale.ENGLISH).format(Date()) ?: "0"
-                String.format("%s_%s", month, day)
-            }
-
-            val url = URL(Constants.URL_WALLPAPERS)
-            val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-            connection.doInput = true
-            connection.connect()
-
-            val inputStream = connection.inputStream
-            val scanner = Scanner(inputStream)
-            val stringBuffer = StringBuffer()
-            while (scanner.hasNext()) {
-                stringBuffer.append(scanner.nextLine())
-            }
-
-            val json = JSONObject(stringBuffer.toString())
-            val wallpapers = json.getString(key)
-            val wallpapersJson = JSONObject(wallpapers)
-            wallpaperUrl = wallpapersJson.getString(wallType)
-            wallpaperUrl
-
-        } catch (e: Exception) {
-            wallpaperUrl = getBackupWallpaper(wallType)
-            wallpaperUrl
-        }
-    }
-}
-
-fun getBackupWallpaper(wallType: String): String {
-    return if (wallType == Constants.WALL_TYPE_LIGHT)
-        Constants.URL_DEFAULT_LIGHT_WALLPAPER
-    else Constants.URL_DEFAULT_DARK_WALLPAPER
+// Picks today's image from our bundled list (res/raw/wallpapers.txt), one URL per line.
+fun getTodaysWallpaper(context: Context): String {
+    val urls = context.resources.openRawResource(R.raw.wallpapers).bufferedReader().readLines().filter { it.isNotBlank() }
+    return urls[java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_YEAR) % urls.size]
 }
 
 @SuppressLint("WrongConstant", "PrivateApi")
