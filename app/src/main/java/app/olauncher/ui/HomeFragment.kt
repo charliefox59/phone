@@ -1,10 +1,12 @@
 package app.olauncher.ui
 
 import android.app.admin.DevicePolicyManager
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.BatteryManager
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +23,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.view.setPadding
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -44,6 +49,9 @@ import app.olauncher.helper.setPlainWallpaperByTheme
 import app.olauncher.helper.showToast
 import app.olauncher.listener.OnSwipeTouchListener
 import app.olauncher.listener.ViewSwipeTouchListener
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import app.olauncher.helper.londonWeather
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -71,6 +79,18 @@ class HomeFragment : BaseFragment(), View.OnClickListener, View.OnLongClickListe
 
         deviceManager = context?.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
 
+        val appContext = requireContext().applicationContext
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                while (true) {
+                    val weather = londonWeather(appContext)
+                    binding.weather.contentDescription = weather?.let { "$it. Weather data by Open-Meteo." }
+                    binding.weather.text = weather
+                    binding.weather.isVisible = weather != null
+                    delay(60_000L)
+                }
+            }
+        }
         initObservers()
         setHomeAlignment(prefs.homeAlignment)
         initSwipeTouchListener()
@@ -226,6 +246,14 @@ class HomeFragment : BaseFragment(), View.OnClickListener, View.OnLongClickListe
         binding.lock.setOnClickListener(this)
         // Home button for recents feature disabled
         // binding.recents.setOnClickListener(this)
+        binding.weather.setOnClickListener {
+            val source = Uri.parse("https://open-meteo.com/en/docs#latitude=51.51&longitude=-0.13")
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, source))
+            } catch (_: ActivityNotFoundException) {
+                Toast.makeText(requireContext(), "Weather data by Open-Meteo", Toast.LENGTH_SHORT).show()
+            }
+        }
         binding.clock.setOnClickListener(this)
         binding.date.setOnClickListener(this)
         binding.clock.setOnLongClickListener(this)

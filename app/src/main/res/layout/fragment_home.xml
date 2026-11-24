@@ -69,6 +69,16 @@
                 tools:text=" · 1h 10m"
                 tools:visibility="visible" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/weather"
+            style="@style/TextStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="3dp"
+            android:visibility="gone"
+            tools:text="london · 6°C · overcast"
+            tools:visibility="visible" />
     </LinearLayout>
 
     <!-- Home apps-->
