@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="3dp"
             android:visibility="gone"
-            tools:text="london · 6°C · overcast"
+            tools:text="6°C · overcast"
             tools:visibility="visible" />
     </LinearLayout>
 

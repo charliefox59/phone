@@ -1,5 +1,8 @@
 package app.olauncher.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
+import androidx.activity.result.contract.ActivityResultContracts
 import android.app.admin.DevicePolicyManager
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -51,12 +54,14 @@ import app.olauncher.listener.OnSwipeTouchListener
 import app.olauncher.listener.ViewSwipeTouchListener
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import app.olauncher.helper.londonWeather
+import app.olauncher.helper.localWeather
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 class HomeFragment : BaseFragment(), View.OnClickListener, View.OnLongClickListener {
+
+    private val requestWeatherLocation = registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
 
     private lateinit var prefs: Prefs
     private lateinit var viewModel: MainViewModel
@@ -80,10 +85,17 @@ class HomeFragment : BaseFragment(), View.OnClickListener, View.OnLongClickListe
         deviceManager = context?.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
 
         val appContext = requireContext().applicationContext
+        val permission = Manifest.permission.ACCESS_COARSE_LOCATION
+        val weatherPrefs = appContext.getSharedPreferences("local_weather", Context.MODE_PRIVATE)
+        if (appContext.checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED &&
+            !weatherPrefs.getBoolean("asked", false)) {
+            weatherPrefs.edit().putBoolean("asked", true).apply()
+            requestWeatherLocation.launch(permission)
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 while (true) {
-                    val weather = londonWeather(appContext)
+                    val weather = localWeather(appContext)
                     binding.weather.contentDescription = weather?.let { "$it. Weather data by Open-Meteo." }
                     binding.weather.text = weather
                     binding.weather.isVisible = weather != null
@@ -247,7 +259,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, View.OnLongClickListe
         // Home button for recents feature disabled
         // binding.recents.setOnClickListener(this)
         binding.weather.setOnClickListener {
-            val source = Uri.parse("https://open-meteo.com/en/docs#latitude=51.51&longitude=-0.13")
+            val source = Uri.parse("https://open-meteo.com/")
             try {
                 startActivity(Intent(Intent.ACTION_VIEW, source))
             } catch (_: ActivityNotFoundException) {
